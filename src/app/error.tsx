@@ -16,7 +16,7 @@ export default function GlobalError({
   }, [error]);
 
   return (
-    <main className="flex flex-1 flex-col items-center justify-center px-[--spacing-gutter] py-28 text-center">
+    <main className="flex flex-1 flex-col items-center justify-center px-(--spacing-gutter) py-28 text-center">
       {/* Error label */}
       <p className="mb-6 text-[13px] text-muted tracking-[0.12em] uppercase">
         Error

@@ -1,35 +1,29 @@
 @import "tailwindcss";
 
-/* ─────────────────────────────────────────────────────────────────────────
-   Tailwind v4 theme — all design tokens registered here become utilities.
-   e.g. --color-floating-active → bg-floating-active, text-floating-active
-        --radius-card            → rounded-card
-        --spacing-gutter         → p-gutter, px-gutter, etc.
-   ───────────────────────────────────────────────────────────────────────── */
 @theme inline {
   /* ── Typography ─────────────────────────────────────────────────── */
   --font-sans: var(--font-inter), Arial, Helvetica, sans-serif;
 
   /* ── Surfaces ───────────────────────────────────────────────────── */
-  --color-canvas:   #fafafa;
-  --color-surface:  #f5f5f5;
+  --color-canvas:  #fafafa;
+  --color-surface: #f5f5f5;
 
   /* ── Text ───────────────────────────────────────────────────────── */
   --color-foreground: #202020;
   --color-muted:      #666666;
 
   /* ── Borders & outlines ─────────────────────────────────────────── */
-  --color-border:  #dedede;
-  --color-focus:   #557993;
+  --color-border: #dedede;
+  --color-focus:  #557993;
 
   /* ── Interactive fills ──────────────────────────────────────────── */
-  --color-control:          #2020200d;
-  --color-glass:            #ffffffb8;
-  --color-floating:         #eeeeeef0;
-  --color-floating-hover:   #e5e5e5f5;
-  --color-floating-active:  #dededef5;
+  --color-control:         #2020200d;
+  --color-glass:           #ffffffb8;
+  --color-floating:        #eeeeeef0;
+  --color-floating-hover:  #e5e5e5f5;
+  --color-floating-active: #dededef5;
 
-  /* ── Status colors ──────────────────────────────────────────────── */
+  /* ── Status ─────────────────────────────────────────────────────── */
   --color-status-pending:      #92650a;
   --color-status-pending-bg:   #fef3c7;
   --color-status-approved:     #166534;
@@ -37,92 +31,65 @@
   --color-status-rejected:     #991b1b;
   --color-status-rejected-bg:  #fee2e2;
 
-  /* ── shadcn/ui semantic bridge ──────────────────────────────────── */
-  --color-background:         #fafafa;
-  --color-card:               #f5f5f5;
-  --color-card-foreground:    #202020;
-  --color-primary:            #202020;
-  --color-primary-foreground: #ffffff;
-  --color-secondary:          #f5f5f5;
+  /* ── shadcn/ui bridge ───────────────────────────────────────────── */
+  --color-background:           #fafafa;
+  --color-card:                 #f5f5f5;
+  --color-card-foreground:      #202020;
+  --color-primary:              #202020;
+  --color-primary-foreground:   #ffffff;
+  --color-secondary:            #f5f5f5;
   --color-secondary-foreground: #202020;
-  --color-muted-foreground:   #666666;
-  --color-accent:             #f5f5f5;
-  --color-accent-foreground:  #202020;
-  --color-destructive:        #991b1b;
-  --color-input:              #dedede;
-  --color-ring:               #557993;
+  --color-muted-foreground:     #666666;
+  --color-accent:               #f5f5f5;
+  --color-accent-foreground:    #202020;
+  --color-destructive:          #991b1b;
+  --color-input:                #dedede;
+  --color-ring:                 #557993;
 
   /* ── Radius ─────────────────────────────────────────────────────── */
-  --radius:       0.75rem;    /* shadcn base */
-  --radius-card:  2.5rem;     /* 40px — responsive via :root below */
-  --radius-xl:    0.75rem;    /* inputs, small cards */
+  --radius:      0.75rem;
+  --radius-card: 2.5rem;
+  --radius-xl:   0.75rem;
 
   /* ── Blur ───────────────────────────────────────────────────────── */
   --blur-floating: 16px;
 
-  /* ── Layout spacing (custom utilities) ─────────────────────────── */
-  --spacing-gutter:  2rem;    /* 32px — responsive via :root below */
-  --spacing-section: 7rem;    /* 112px */
-  --spacing-column:  2.5rem;  /* 40px */
+  /* ── Layout spacing ─────────────────────────────────────────────── */
+  --spacing-gutter:  2rem;
+  --spacing-section: 7rem;
+  --spacing-column:  2.5rem;
 }
 
-/* ─── Responsive layout overrides (non-Tailwind, via :root) ──────────────
-   These change the CSS variable values at breakpoints. The Tailwind
-   utilities (px-gutter, gap-section etc.) automatically pick up the new
-   values because they reference var(--spacing-gutter) etc. at runtime.
-   ───────────────────────────────────────────────────────────────────────── */
+/* ─── Base layout vars ───────────────────────────────────────────────────── */
 :root {
   --header-height:         64px;
   --header-control-height: 32px;
+  color-scheme: light;
 }
 
+/* ─── Responsive layout overrides ───────────────────────────────────────── */
 @media (min-width: 768px) and (not (min-width: 1200px)) {
   :root {
-    --spacing-gutter:  1.5rem;   /* 24px */
-    --spacing-section: 5.5rem;   /* 88px */
-    --spacing-column:  1.5rem;   /* 24px */
-    --radius-card:     2rem;     /* 32px */
+    --spacing-gutter:  1.5rem;
+    --spacing-section: 5.5rem;
+    --spacing-column:  1.5rem;
+    --radius-card:     2rem;
   }
 }
 
 @media not all and (min-width: 768px) {
   :root {
-    --spacing-gutter:        1.25rem;  /* 20px */
-    --spacing-column:        1.5rem;   /* 24px */
+    --spacing-gutter:        1.25rem;
+    --spacing-column:        1.5rem;
     --header-height:         80px;
     --header-control-height: 40px;
-    --radius-card:           1.75rem;  /* 28px */
+    --radius-card:           1.75rem;
   }
 }
 
 @media not all and (min-width: 360px) {
   :root {
-    --spacing-gutter: 1rem;  /* 16px */
-  }
-}
-
-/* ─── Dark mode ─────────────────────────────────────────────────────────── */
-@media (prefers-color-scheme: dark) {
-  @theme inline {
-    --color-canvas:   #0f0f0f;
-    --color-surface:  #1a1a1a;
-
-    --color-foreground: #ededed;
-    --color-muted:      #888888;
-
-    --color-border: #2e2e2e;
-
-    --color-control:         #ffffff0d;
-    --color-glass:           #1a1a1ab8;
-    --color-floating:        #252525f0;
-    --color-floating-hover:  #2e2e2ef5;
-    --color-floating-active: #333333f5;
-
-    /* shadcn bridge mirrors */
-    --color-background:      #0f0f0f;
-    --color-card:            #1a1a1a;
-    --color-card-foreground: #ededed;
-    --color-input:           #2e2e2e;
+    --spacing-gutter: 1rem;
   }
 }
 
@@ -132,6 +99,8 @@
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
     scroll-padding-top: calc(var(--header-height) + 24px);
+    color-scheme: light;
+    forced-color-adjust: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -148,9 +117,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 400;
-  }
+  h1, h2, h3, h4, h5, h6 { font-weight: 400; }
 
   h1 {
     font-size: clamp(28px, 4vw, 40px);
@@ -174,7 +141,5 @@
     outline-offset: 5px;
   }
 
-  ::selection {
-    background-color: #dbe4df;
-  }
+  ::selection { background-color: #dbe4df; }
 }

@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center px-[--page-gutter] py-28 text-center">
+    <main className="flex flex-1 flex-col items-center justify-center px-(--spacing-gutter) py-28 text-center">
       {/* Wordmark */}
       <p className="mb-8 text-[13px] text-muted tracking-[0.12em] uppercase">
         Sikhbo

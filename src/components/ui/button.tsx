@@ -3,24 +3,23 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"
 
 const buttonVariants = cva(
-  // Base: pill, normal weight, quiet transitions, accessible focus
-  "group/button inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full border border-transparent text-[13px] font-normal whitespace-nowrap transition-colors duration-150 outline-none select-none focus-visible:outline-2 focus-visible:outline-offset-5 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex shrink-0 cursor-pointer items-center justify-center gap-1.5 rounded-full border border-transparent text-[13px] font-normal whitespace-nowrap transition-colors duration-150 outline-none select-none focus-visible:outline-2 focus-visible:outline-offset-5 focus-visible:outline-focus disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        // Filled foreground — primary action
+        // Filled — primary action
         default:
           "bg-foreground text-white hover:bg-[#454545] active:bg-[#333333]",
-        // Ghost with border — secondary action
+        // Bordered — secondary action
         outline:
           "border-border bg-transparent text-foreground hover:bg-control active:bg-floating-active",
-        // Ghost without border — tertiary / nav
+        // Borderless — tertiary / nav actions
         ghost:
           "text-foreground hover:bg-control active:bg-floating-active",
-        // Destructive — reject actions (text color only, tinted bg on hover)
+        // Destructive — reject
         destructive:
           "border-border bg-transparent text-status-rejected hover:bg-status-rejected-bg active:bg-status-rejected-bg",
-        // Approve — confirm/approve actions
+        // Success — approve
         success:
           "border-border bg-transparent text-status-approved hover:bg-status-approved-bg active:bg-status-approved-bg",
         // Text link
