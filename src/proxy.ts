@@ -18,7 +18,7 @@ export function proxy(request: NextRequest) {
 
   // Already signed in — redirect away from auth pages
   if (AUTH_PAGES.includes(pathname as (typeof AUTH_PAGES)[number]) && hasSession) {
-    return NextResponse.redirect(new URL(ROUTES.studentDashboard, request.url));
+    return NextResponse.redirect(new URL(ROUTES.studentSubmissions, request.url));
   }
 
   // Unauthenticated — redirect to login, preserve intended destination

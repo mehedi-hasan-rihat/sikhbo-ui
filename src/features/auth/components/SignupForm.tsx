@@ -30,8 +30,8 @@ export function SignupForm() {
     setServerError(null);
     try {
       await registerUser(data);
-      // Register always creates a STUDENT — go straight to student dashboard
-      router.push(ROUTES.studentDashboard);
+      // Register always creates a STUDENT — go straight to submissions
+      router.push(ROUTES.studentSubmissions);
       router.refresh();
     } catch (err) {
       if (isApiError(err)) {

@@ -36,7 +36,7 @@ export function LoginForm() {
       const payload = decodeToken(res.data.token);
       const role = payload?.role;
       const destination =
-        next ?? (role === "MENTOR" ? ROUTES.mentorDashboard : ROUTES.studentDashboard);
+        next ?? (role === "MENTOR" ? ROUTES.mentorDashboard : ROUTES.studentSubmissions);
       router.push(destination);
       router.refresh();
     } catch (err) {
