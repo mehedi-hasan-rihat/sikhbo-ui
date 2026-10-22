@@ -25,9 +25,11 @@ export const PAGE_SIZE_DEFAULT = 10;
 
 // ── App routes ────────────────────────────────────────────────────────────────
 export const ROUTES = {
-  home:             "/",
-  login:            "/login",
-  signup:           "/signup",
-  studentDashboard: "/student/dashboard",
-  mentorDashboard:  "/mentor/submissions",
+  home:                "/",
+  login:               "/login",
+  signup:              "/signup",
+  studentSubmissions:  "/student/submissions",
+  newSubmission:       "/student/submissions/new",
+  mentorDashboard:     "/mentor/submissions",
+  submissionDetail:    (id: string) => `/student/submissions/${id}`,
 } as const;

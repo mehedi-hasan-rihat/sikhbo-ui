@@ -37,7 +37,7 @@ export async function requireRole(role: "STUDENT" | "MENTOR"): Promise<User> {
   if (!user) redirect("/login");
   const u = user!;
   if (u.role !== role) {
-    redirect(u.role === "MENTOR" ? "/mentor/submissions" : "/student/dashboard");
+    redirect(u.role === "MENTOR" ? "/mentor/submissions" : "/student/submissions");
   }
   return u;
 }
