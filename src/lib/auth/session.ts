@@ -14,7 +14,6 @@ export async function getSession(): Promise<User | null> {
   try {
     const res = await fetch(`${API_BASE_URL}/auth/me`, {
       headers: { Authorization: `Bearer ${token}` },
-      cache: "no-store",
     });
     if (!res.ok) return null;
     const body: MeResponse = await res.json();

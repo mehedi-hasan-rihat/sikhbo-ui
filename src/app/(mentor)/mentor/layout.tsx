@@ -1,6 +1,8 @@
 import { requireRole } from "@/lib/auth/session";
 import { AppHeader } from "@/components/layout/AppHeader";
 
+export const instant = false;
+
 export default async function MentorLayout({ children }: LayoutProps<"/mentor">) {
   const user = await requireRole("MENTOR");
   return (

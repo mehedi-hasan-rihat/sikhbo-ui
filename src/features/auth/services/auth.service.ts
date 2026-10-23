@@ -1,6 +1,3 @@
-/**
- * Auth service — runs in Client Components only.
- */
 import { API_BASE_URL } from "@/lib/constants";
 import { saveToken, clearToken } from "@/lib/auth/token";
 import type { LoginInput, SignupInput } from "@/features/auth/schemas";

@@ -1,10 +1,6 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 
-import { getSubmissionById } from "@/features/submissions/services/submission.service";
 import type { Submission } from "@/types/submission";
 import { ROUTES } from "@/lib/constants";
 import { StatusBadge } from "./StatusBadge";
@@ -16,76 +12,34 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-interface SubmissionDetailProps {
-  id: string;
+export function SubmissionDetailNotFound() {
+  return (
+    <div className="flex flex-col gap-4">
+      <BackLink />
+      <p className="text-[15px] text-muted">Submission not found.</p>
+    </div>
+  );
 }
 
-type FetchState =
-  | { type: "loading" }
-  | { type: "loaded"; submission: Submission }
-  | { type: "not-found" }
-  | { type: "error"; message: string };
+export function SubmissionDetailError({ message }: { message: string }) {
+  return (
+    <div className="flex flex-col gap-4">
+      <BackLink />
+      <p
+        role="alert"
+        className="rounded-xl bg-status-rejected-bg px-4 py-3 text-[13px] text-status-rejected"
+      >
+        {message}
+      </p>
+    </div>
+  );
+}
 
-export function SubmissionDetail({ id }: SubmissionDetailProps) {
-  const [state, setState] = useState<FetchState>({ type: "loading" });
+interface SubmissionDetailProps {
+  submission: Submission;
+}
 
-  useEffect(() => {
-    let cancelled = false;
-    getSubmissionById(id)
-      .then((submission) => {
-        if (cancelled) return;
-        setState(
-          submission
-            ? { type: "loaded", submission }
-            : { type: "not-found" }
-        );
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setState({ type: "error", message: "Failed to load submission. Please try again." });
-        }
-      });
-    return () => { cancelled = true; };
-  }, [id]);
-
-  // ── Loading ────────────────────────────────────────────────────────────
-  if (state.type === "loading") {
-    return (
-      <div className="flex flex-col gap-4 w-full max-w-2xl">
-        <div className="h-8 w-48 animate-pulse rounded-lg bg-surface border border-border" />
-        <div className="h-64 w-full animate-pulse rounded-xl bg-surface border border-border" />
-      </div>
-    );
-  }
-
-  // ── Not found ──────────────────────────────────────────────────────────
-  if (state.type === "not-found") {
-    return (
-      <div className="flex flex-col gap-4">
-        <BackLink />
-        <p className="text-[15px] text-muted">Submission not found.</p>
-      </div>
-    );
-  }
-
-  // ── Error ──────────────────────────────────────────────────────────────
-  if (state.type === "error") {
-    return (
-      <div className="flex flex-col gap-4">
-        <BackLink />
-        <p
-          role="alert"
-          className="rounded-xl bg-status-rejected-bg px-4 py-3 text-[13px] text-status-rejected"
-        >
-          {state.message}
-        </p>
-      </div>
-    );
-  }
-
-  // ── Loaded ─────────────────────────────────────────────────────────────
-  const { submission } = state;
-
+export function SubmissionDetail({ submission }: SubmissionDetailProps) {
   return (
     <div className="flex flex-col gap-6 w-full max-w-2xl">
       <BackLink />
@@ -165,8 +119,6 @@ export function SubmissionDetail({ id }: SubmissionDetailProps) {
     </div>
   );
 }
-
-// ── Helpers ──────────────────────────────────────────────────────────────────
 
 function BackLink() {
   return (

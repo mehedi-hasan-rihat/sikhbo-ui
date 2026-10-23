@@ -1,22 +1,8 @@
-/**
- * Centralized API client.
- *
- * - Server-side (Server Components, Route Handlers): reads the JWT from the
- *   Next.js cookie store and adds Authorization: Bearer <token>.
- * - Client-side (Client Components): reads the JWT cookie via document.cookie.
- *
- * Never import server-only APIs (next/headers) at the top level — they are
- * imported dynamically inside getToken() so this module is safe to use in
- * both environments.
- */
 import { API_BASE_URL, API_TIMEOUT_MS, AUTH_COOKIE } from "@/lib/constants";
 import type { ApiError } from "@/types/api";
 
 type QueryParams = Record<string, string | number | boolean | undefined>;
 
-// ── Token helpers ─────────────────────────────────────────────────────────────
-
-/** Read the JWT from the Next.js cookie store (server-side only). */
 async function getServerToken(): Promise<string | null> {
   try {
     const { cookies } = await import("next/headers");
@@ -27,7 +13,6 @@ async function getServerToken(): Promise<string | null> {
   }
 }
 
-/** Read the JWT from document.cookie (browser only). */
 function getClientToken(): string | null {
   if (typeof document === "undefined") return null;
   const match = document.cookie.match(
@@ -40,8 +25,6 @@ async function getToken(): Promise<string | null> {
   if (typeof window === "undefined") return getServerToken();
   return getClientToken();
 }
-
-// ── Core request ──────────────────────────────────────────────────────────────
 
 async function request<T>(
   method: string,
@@ -71,7 +54,6 @@ async function request<T>(
       headers,
       body: body !== undefined ? JSON.stringify(body) : undefined,
       signal: controller.signal,
-      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -96,15 +78,11 @@ async function request<T>(
   }
 }
 
-// ── Public client (no auth header, for login/register) ───────────────────────
-
 export const publicClient = {
   post<T>(path: string, body: unknown): Promise<T> {
     return request<T>("POST", path, body);
   },
 };
-
-// ── Authenticated client ──────────────────────────────────────────────────────
 
 export const apiClient = {
   get<T>(path: string, params?: QueryParams): Promise<T> {

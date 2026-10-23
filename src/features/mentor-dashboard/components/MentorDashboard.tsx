@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import {
   getMentorSubmissions,
   getMentorStats,
 } from "@/features/mentor-dashboard/services/mentor.service";
-import type { MentorSubmission, MentorStats, StatusFilter } from "@/types/mentor";
+import type { MentorSubmission, MentorStats, MentorSubmissionsData, StatusFilter } from "@/types/mentor";
 import type { SubmissionStatus } from "@/lib/constants";
 
 import { StatsCards } from "./StatsCards";
@@ -14,17 +14,22 @@ import { SubmissionsTable, SubmissionsTableSkeleton } from "./SubmissionsTable";
 import { Pagination, type PageSizeOption } from "./Pagination";
 import { ReviewDialog } from "./ReviewDialog";
 
-export function MentorDashboard() {
-  // ── Data state ────────────────────────────────────────────────────────────
-  const [submissions, setSubmissions] = useState<MentorSubmission[]>([]);
-  const [pagination, setPagination] = useState({
-    total: 0, page: 1, pageSize: 10, totalPages: 0,
-  });
-  const [stats, setStats] = useState<MentorStats | null>(null);
+interface MentorDashboardProps {
+  initialData: MentorSubmissionsData;
+  initialStats: MentorStats;
+}
 
-  // ── UI state ──────────────────────────────────────────────────────────────
-  const [tableLoading, setTableLoading] = useState(true);
-  const [statsLoading, setStatsLoading] = useState(true);
+export function MentorDashboard({ initialData, initialStats }: MentorDashboardProps) {
+  // ── Data state — hydrated from server ─────────────────────────────────────
+  const [submissions, setSubmissions] = useState<MentorSubmission[]>(
+    initialData.submissions,
+  );
+  const [pagination, setPagination] = useState(initialData.pagination);
+  const [stats, setStats] = useState<MentorStats | null>(initialStats);
+
+  // ── UI state — no loading spinners on first paint ─────────────────────────
+  const [tableLoading, setTableLoading] = useState(false);
+  const [statsLoading, setStatsLoading] = useState(false);
   const [tableError, setTableError] = useState<string | null>(null);
   const [statsError, setStatsError] = useState<string | null>(null);
 
@@ -37,8 +42,15 @@ export function MentorDashboard() {
   const [dialogSubmission, setDialogSubmission] = useState<MentorSubmission | null>(null);
   const [dialogAction, setDialogAction] = useState<"APPROVED" | "REJECTED" | null>(null);
 
-  // ── Fetch submissions (effect — inlined to avoid cascading renders) ──────
+  // ── Skip first fetch — data already comes from server props ──────────────
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     let cancelled = false;
 
     async function load() {
@@ -60,35 +72,17 @@ export function MentorDashboard() {
     return () => { cancelled = true; };
   }, [page, pageSize, statusFilter]);
 
-  // ── Fetch stats (effect — inlined) ───────────────────────────────────────
-  useEffect(() => {
-    let cancelled = false;
-
-    async function loadStats() {
-      setStatsLoading(true);
-      setStatsError(null);
-      try {
-        const data = await getMentorStats();
-        if (cancelled) return;
-        setStats(data);
-      } catch {
-        if (!cancelled) setStatsError("Failed to load statistics.");
-      } finally {
-        if (!cancelled) setStatsLoading(false);
-      }
-    }
-
-    loadStats();
-    return () => { cancelled = true; };
-  }, []);
-
-  // ── Refresh stats after a review action (called from event handler) ─────
+  // ── Fetch stats (only on subsequent updates, not initial mount) ─────────
   const refreshStats = useCallback(async () => {
+    setStatsLoading(true);
+    setStatsError(null);
     try {
       const data = await getMentorStats();
       setStats(data);
     } catch {
-      // keep existing stats on error
+      setStatsError("Failed to load statistics.");
+    } finally {
+      setStatsLoading(false);
     }
   }, []);
 

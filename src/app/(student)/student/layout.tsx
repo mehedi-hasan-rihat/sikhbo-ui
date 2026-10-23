@@ -1,6 +1,8 @@
 import { requireRole } from "@/lib/auth/session";
 import { AppHeader } from "@/components/layout/AppHeader";
 
+export const instant = false;
+
 export default async function StudentLayout({ children }: LayoutProps<"/student">) {
   const user = await requireRole("STUDENT");
   return (
