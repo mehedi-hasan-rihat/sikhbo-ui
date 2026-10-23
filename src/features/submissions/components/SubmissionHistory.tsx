@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
 
 import { getMySubmissions } from "@/features/submissions/services/submission.service";
 import type { Submission } from "@/types/submission";
 import { ROUTES } from "@/lib/constants";
+import { EmbedLink } from "@/components/shared/EmbedLink";
 import { StatusBadge } from "./StatusBadge";
 import {
   Table,
@@ -208,29 +208,3 @@ export function SubmissionHistory() {
 }
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
-
-/** "github.com/user/repo" → "user/repo" */
-function repoLabel(url: string): string {
-  try {
-    const { pathname } = new URL(url);
-    // pathname = "/user/repo" → drop leading slash
-    return pathname.replace(/^\//, "").replace(/\/$/, "") || url;
-  } catch {
-    return url;
-  }
-}
-
-function EmbedLink({ href, label }: { href: string; label: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      title={href}
-      className="inline-flex items-center gap-1 rounded-md border border-border px-2 py-0.5 text-[12px] text-muted max-w-48 truncate"
-    >
-      {label}
-      <ExternalLink size={10} className="shrink-0 opacity-50" />
-    </a>
-  );
-}
