@@ -10,7 +10,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Sikhbo — Project Review Portal",
+  title: {
+    default: "Sikhbo — Project Review Portal",
+    template: "%s — Sikhbo",
+  },
   description: "Submit and review student development projects",
 };
 

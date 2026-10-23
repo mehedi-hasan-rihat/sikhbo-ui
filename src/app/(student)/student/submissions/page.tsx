@@ -1,9 +1,14 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { PageShell } from "@/components/layout/PageShell";
 import { SubmissionHistory } from "@/features/submissions/components/SubmissionHistory";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/lib/constants";
 
+export const metadata: Metadata = {
+  title: "My Submissions",
+  description: "Track the status of your submitted projects.",
+};
 
 export default function StudentSubmissionsPage() {
   return (

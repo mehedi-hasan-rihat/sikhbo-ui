@@ -1,12 +1,8 @@
-// ── Server-side only ──────────────────────────────────────────────────────────
+// ── API base URL (works on both server and client) ────────────────────────────
 export const API_BASE_URL =
-  process.env.API_BASE_URL ?? "http://localhost:5000/api/v1";
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:5000/api/v1";
 
 export const API_TIMEOUT_MS = 10_000;
-
-// ── Browser-safe — used in Client Components ──────────────────────────────────
-export const PUBLIC_API_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api/v1";
 
 // ── JWT cookie name (set client-side after login) ─────────────────────────────
 export const AUTH_COOKIE = "auth_token";

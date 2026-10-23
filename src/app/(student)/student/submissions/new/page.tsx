@@ -1,9 +1,14 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
 import { PageShell } from "@/components/layout/PageShell";
 import { SubmissionForm } from "@/features/submissions/components/SubmissionForm";
 import { ROUTES } from "@/lib/constants";
 
+export const metadata: Metadata = {
+  title: "New Submission",
+  description: "Submit your project details for mentor review.",
+};
 
 export default function NewSubmissionPage() {
   return (

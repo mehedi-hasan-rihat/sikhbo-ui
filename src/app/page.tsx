@@ -1,5 +1,11 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
+
+export const metadata: Metadata = {
+  title: "Home",
+  description: "Submit your project for mentor review, or sign in to start evaluating submissions.",
+};
 
 export default function Home() {
   return (

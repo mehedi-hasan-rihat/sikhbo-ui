@@ -1,8 +1,7 @@
 /**
  * Mentor dashboard service — Client Components only.
- * Uses PUBLIC_API_URL so the browser can reach the Express API.
  */
-import { PUBLIC_API_URL } from "@/lib/constants";
+import { API_BASE_URL } from "@/lib/constants";
 import { getToken } from "@/lib/auth/token";
 import type { ApiError } from "@/types/api";
 import type {
@@ -27,7 +26,7 @@ async function authedRequest<T>(
   };
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
-  const url = new URL(`${PUBLIC_API_URL}${path}`);
+  const url = new URL(`${API_BASE_URL}${path}`);
   if (params) {
     for (const [k, v] of Object.entries(params)) {
       if (v !== undefined) url.searchParams.set(k, String(v));

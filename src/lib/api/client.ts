@@ -9,7 +9,7 @@
  * imported dynamically inside getToken() so this module is safe to use in
  * both environments.
  */
-import { API_BASE_URL, PUBLIC_API_URL, API_TIMEOUT_MS, AUTH_COOKIE } from "@/lib/constants";
+import { API_BASE_URL, API_TIMEOUT_MS, AUTH_COOKIE } from "@/lib/constants";
 import type { ApiError } from "@/types/api";
 
 type QueryParams = Record<string, string | number | boolean | undefined>;
@@ -48,12 +48,8 @@ async function request<T>(
   path: string,
   body?: unknown,
   params?: QueryParams,
-  /** Pass true to use PUBLIC_API_URL (client components) */
-  isPublic = false
 ): Promise<T> {
-  const base = isPublic ? PUBLIC_API_URL : API_BASE_URL;
-
-  const url = new URL(`${base}${path}`);
+  const url = new URL(`${API_BASE_URL}${path}`);
   if (params) {
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined) url.searchParams.set(key, String(value));
@@ -104,7 +100,7 @@ async function request<T>(
 
 export const publicClient = {
   post<T>(path: string, body: unknown): Promise<T> {
-    return request<T>("POST", path, body, undefined, true);
+    return request<T>("POST", path, body);
   },
 };
 

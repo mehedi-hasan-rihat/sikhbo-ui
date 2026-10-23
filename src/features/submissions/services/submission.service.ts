@@ -1,8 +1,7 @@
 /**
  * Submission service — runs in Client Components only.
- * Uses PUBLIC_API_URL (NEXT_PUBLIC_API_URL) for browser fetch.
  */
-import { PUBLIC_API_URL } from "@/lib/constants";
+import { API_BASE_URL } from "@/lib/constants";
 import { getToken } from "@/lib/auth/token";
 import type { ApiError } from "@/types/api";
 import type { SubmissionInput } from "@/features/submissions/schemas";
@@ -19,7 +18,7 @@ async function authedRequest<T>(
   };
   if (token) headers["Authorization"] = `Bearer ${token}`;
 
-  const res = await fetch(`${PUBLIC_API_URL}${path}`, {
+  const res = await fetch(`${API_BASE_URL}${path}`, {
     method,
     headers,
     body: body !== undefined ? JSON.stringify(body) : undefined,

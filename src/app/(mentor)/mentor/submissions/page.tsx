@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { PageShell } from "@/components/layout/PageShell";
 import { MentorDashboard } from "@/features/mentor-dashboard/components/MentorDashboard";
+
+export const metadata: Metadata = {
+  title: "Review Dashboard",
+  description: "Review, approve, and reject student project submissions.",
+};
 
 /**
  * No 'use cache' — dynamic by default with cacheComponents enabled.

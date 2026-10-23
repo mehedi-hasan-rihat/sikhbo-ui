@@ -1,15 +1,14 @@
 /**
  * Auth service — runs in Client Components only.
- * Uses PUBLIC_API_URL (NEXT_PUBLIC_API_URL) for browser fetch.
  */
-import { PUBLIC_API_URL } from "@/lib/constants";
+import { API_BASE_URL } from "@/lib/constants";
 import { saveToken, clearToken } from "@/lib/auth/token";
 import type { LoginInput, SignupInput } from "@/features/auth/schemas";
 import type { ApiError } from "@/types/api";
 import type { AuthTokenResponse } from "@/types/auth";
 
 async function post<T>(path: string, body: unknown): Promise<T> {
-  const res = await fetch(`${PUBLIC_API_URL}${path}`, {
+  const res = await fetch(`${API_BASE_URL}${path}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -26,7 +25,7 @@ async function post<T>(path: string, body: unknown): Promise<T> {
 }
 
 async function authedPost(path: string, token: string): Promise<void> {
-  await fetch(`${PUBLIC_API_URL}${path}`, {
+  await fetch(`${API_BASE_URL}${path}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

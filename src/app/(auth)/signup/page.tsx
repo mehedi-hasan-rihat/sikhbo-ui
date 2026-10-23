@@ -1,6 +1,6 @@
 import { SignupForm } from "@/features/auth/components/SignupForm";
 
-export const metadata = { title: "Sign up — Sikhbo" };
+export const metadata = { title: "Sign up" };
 
 export default function SignupPage() {
   return (
